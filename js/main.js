@@ -572,8 +572,7 @@ function nodeActive(a) {
             e.push(h)
         }
 
-		var subreddit = sigInst.getNodes(a.content[0]).label;
-		var srURL = "http://www.reddit.com/r/" + subreddit;
+		var srURL = "http://www.reddit.com/r/" + a.label;
         if (image_attribute) {
         	//image_index = jQuery.inArray(image_attribute, temp_array);
         	$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a href=\"' + srURL + '\" target=\"_blank\">' + b.label + "</a></span></div>");
