@@ -34,15 +34,15 @@
       "minNodeSize": 1
     },
     "drawingProperties": {
-      "labelThreshold": 10,
+      "labelThreshold": 14,
       "hoverFontStyle": "bold",
       "defaultEdgeType": "curve",
-      "defaultLabelColor": "#000",
-      "defaultLabelHoverColor": "#fff",
+      "defaultLabelColor": "#fff",
+      "defaultLabelHoverColor": "#000",
       "defaultLabelSize": 14,
       "activeFontStyle": "bold",
       "fontStyle": "bold",
-      "defaultHoverLabelBGColor": "#002147",
+      "defaultHoverLabelBGColor": "#fff",
       "defaultLabelBGColor": "#ddd"
     },
     "mouseProperties": {
