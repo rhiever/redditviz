@@ -109,7 +109,8 @@ function initSigma(config) {
 		    //nodeActive(a.content[0])
 		});
 
-		a.activateFishEye().draw();
+		//a.activateFishEye().draw();
+		a.draw();
 		configSigmaElements(config);
 	}
 
