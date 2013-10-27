@@ -549,6 +549,7 @@ function nodeActive(a) {
 	
 	sigInst._core.mousecaptor.isMouseDown = true;
 	sigInst.zoomTo(b.displayX, b.displayY, 5);
+	sigInst._core.mousecaptor.isMouseDown = false;
 
     $GP.info_link.find("ul").html(f.join(""));
     $GP.info_link.find("li").each(function () {
