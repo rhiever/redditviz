@@ -1,0 +1,134 @@
+html, body {
+    height: 100%;
+    background:#fff;
+    color:#333;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.container {
+    width: 100%;
+}
+
+.header-container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#main {
+    width: 80%;
+    margin-top: 80px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#header {
+    background-image: url('../img/header.png');
+    background-color: #333;
+    background-repeat: no-repeat;
+    color: #FFF;
+    width: 80%;
+    max-width: 904px;
+    margin: 0 auto;
+    margin-bottom: 30px;
+}
+
+#graph-wrapper
+#graph-wrapper-embedded {
+    width: 100%;
+    padding: 8px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#graph-wrapper-embedded {
+    display: table;
+    height: 100%;
+}
+
+#graph-wrapper {
+    height: 900px;
+}
+
+#graph {
+    width: 100%;
+    height: 100%;
+    background: #222;
+    float: left;
+    border-radius: 7px;
+      -moz-border-radius: 7px;
+      -webkit-border-radius: 7px;
+}
+#graph-wrapper-embedded >#graph {
+    float: none;
+}
+
+#graph-wrapper-embedded>div {
+    display: table-row;
+}
+
+.sigma-font {
+    font-family: lobster, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-decoration: none;
+    display: inline;
+}
+
+#controls {
+    float: initial;
+}
+
+#controls>*,
+#controls>*>* {
+    float: left;
+}
+
+#searchalert {
+    display: none;
+    padding: 4px;
+}
+
+#likebuttons {
+    float: right;
+}
+
+.datetime {
+    display: inline;
+    font-weight: bold;
+}
+
+.alert {
+    color: orangered;
+    font: 0.8em "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.footnote {
+    padding: 8px;
+    font-size: 0.7em;
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+#footer {
+    height: 60px;
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 70px;
+    border-top: 1px solid #e5e5e5;
+    color: #777;
+    background-color: #f5f5f5;
+}
+
+.right {
+    float: right;
+}
+

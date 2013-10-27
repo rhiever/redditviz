@@ -1,0 +1,83 @@
+html, body {
+    background: #222;
+    color: #FFF;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+a {
+    color: cadetblue;
+}
+
+#main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#graph-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#graph {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.sigma-font {
+    font-family: lobster, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-decoration: none;
+    display: inline;
+}
+
+#controls {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+#controls>*,
+#controls>*>* {
+    float: left;
+}
+
+#searchalert {
+    display: none;
+    padding: 4px;
+}
+
+.datetime {
+    display: inline;
+    font-weight: bold;
+}
+
+.alert {
+    color: orangered;
+    font: 0.8em "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.footnote {
+    padding: 8px;
+    font-size: 0.7em;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.right {
+    float: right;
+}
+

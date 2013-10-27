@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <title>Subreddit connections</title>
+        <link rel="shortcut icon" href="img/reddit.png" />
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src="js/sigma.min.js"></script>
+        <script src="js/sigma.fisheye.js"></script>
+        <script src="js/sigma.parseGexf.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="js/showGraph.js"></script>
+    </head>
+    <body>
+        <!-- URL shortened to http://goo.gl/ReMvh -->
+        <div id="main">
+            <h1 id="main-title">The Reddit network</h1>
+            <p>
+                In April 2013 <a target="_blank" href="http://www.reddit.com/r/TheoryOfReddit/comments/1ava66/has_anyone_ever_made_a_graph_of_how_all_the/">I posed the question</a>: has anyone ever tried to perform social network analysis on <a target="_blank" href="http://www.reddit.com">Reddit</a> by visualising the links between different subreddits? As you can see from the discussion on that page, several other attempts have also been made at answering this question, mainly by using sidebar links to define connections between subreddits.
+            </p>
+            <p>
+                This page is my first attempt at answering this question in a new way. I've produced a graph showing links between subreddits, where a link is defined as a redditor posting a link in one subreddit to another subreddit.
+            </p>
+            <p>
+                This graph was based on data collected from public Reddit posts since 2008, kindly provided by <a target="_blank" href="http://www.reddit.com/user/Deimorz">Deimorz</a>.
+            </p>
+            <p>
+                In order to identify the most interesting cliques, the following process was applied to the data (if you aren't familiar with the nomenclature of graph theory, a "node" is a point on a graph (so one of the subreddits in this case), an "edge" is a link between two nodes and the "degree" of a node is the number of edges connected to it):
+                <ul>
+                    <li>Removed edges between subreddits that have less than eight occurrances.</li>
+                    <li>Removed nodes with a degree greater than 75 (this was enough to get rid of every sub in the <a target="_blank" href="http://stattit.com/">top 20 subreddits (by subscriber)</a>. Since these subs are likely to link to a wide variety of topics, an association with one of these subs is not particularly interesting to us.</li>
+                    <li>Remove any remaining nodes that are now orphaned (i.e. no edges link to them).</li>
+                    <li>Use a <a target="_blank" href="http://gephi.org/2011/forceatlas2-the-new-version-of-our-home-brew-layout/">ForceAtlas</a> layout in <a target="_blank" href="https://gephi.org/">Gephi</a> to define the cliques.</li>
+                </ul>
+            </p>
+            <p>
+                The nodes have been sized and coloured according to their degree (i.e. the number of edges connected to them), so subreddits that link to lots of other parts of reddit will appear to be bigger and redder.
+            </p>
+            <p>
+                There are many different ways to define associations and many different ways to filter/identify niches, so if you have any other ideas then feel free to post something on the <a href="http://www.reddit.com/r/TheoryOfReddit/comments/1e596w/a_graph_of_reddit_linking_subs_based_on_internal/" target="_blank">comments</a> for this page if you'd like to suggest anything. A link to download the graph file displayed here can be found at the <a href="#footnote">bottom of the page</a>.
+            </p>
+            <p>
+                The graph below is zoomable, draggable and searchable, so have an explore! It covers posts from <span class="datetime">Thu, 23 Jun 2005 18:50:02 GMT</span> to <span class="datetime">Thu, 28 Mar 2013 01:24:17 GMT</span>. If you click on a subreddit, it will open in a new tab.
+            </p>
+            <div id="graph-wrapper">
+                <div id="controls">
+                    <button id="reset-graph">Reset graph</button>
+                    <button id="toggle-hiding">Hide unconnected networks</button>
+                    <div id="search">
+                        <input type="search" name="searchbox" id="searchbox" results=5 placeholder="e.g. 'Minecraft'"/>
+                        <div id="searchalert" class="alert">No matches found</div>
+                    </div>
+                </div>
+                <div id="graph"></div>
+                <div class="right footnote">Powered by <div class="sigma-font">sigma.js</div>. Best viewed in <a target="_blank" href="http://www.google.com/chrome">Google Chrome</a></div>
+            </div>
+            <br />
+            <div id="footnote" class="footnote">
+                This graph was produced with <a target="_blank" class="sigma-font" href="http://sigmajs.org">sigma.js</a> by sharkbait784 in May 2013. You can download the graph in <a target="_blank" href="http://gexf.net/format/">GEXF</a> format <a target="_blank" href="data/subreddits.gexf">here</a>.
+            <div>
+        </div>
+    </body>
+</html>
