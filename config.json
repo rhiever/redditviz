@@ -13,8 +13,8 @@
     "intro": "This is an attempt to visualize the entire reddit interest network."
   },
   "legend": {
-    "edgeLabel": "Related",
-    "colorLabel": "Number of connected subreddits. Red = many, blue = few",
+    "edgeLabel": "Related subreddits",
+    "colorLabel": "Number of related subreddits<br />Red = many, blue = few",
     "nodeLabel": "Subreddit"
   },
   "features": {
