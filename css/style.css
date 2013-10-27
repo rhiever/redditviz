@@ -187,10 +187,27 @@ font-size:14px;
 }
 
 #developercontainer {
-	margin-left:25px;
-	margin-bottom:25px;
-	position:fixed;
-	bottom:0;
+        margin-left:25px;
+        margin-bottom:25px;
+        position:fixed;
+        bottom:0;
+    color: #fff;
+}
+
+#developercontainer>div {
+    display: inline-block;
+}
+
+#developercontainer>div#sigma-brand {
+    display: block;
+}
+
+.twitter-tweet {
+    width: 90px;
+}
+
+.fb-like {
+    width: 80px;
 }
 
 #jisc {
