@@ -34,7 +34,7 @@
       "minNodeSize": 1
     },
     "drawingProperties": {
-      "labelThreshold": 5,
+      "labelThreshold": 10,
       "hoverFontStyle": "bold",
       "defaultEdgeType": "curve",
       "defaultLabelColor": "#000",
@@ -46,7 +46,7 @@
       "defaultLabelBGColor": "#ddd"
     },
     "mouseProperties": {
-      "minRatio": 0.75,
+      "minRatio": 0.25,
       "maxRatio": 20
     }
   }
