@@ -547,9 +547,8 @@ function nodeActive(a) {
     b.attr.strokeStyle = "#000000";
     sigInst.draw(2, 2, 2, 2);
 	
-	sigInst.position(0,0,1).draw();
+	sigInst.position(0,0,1).draw(2, 2, 2);
 	sigInst.zoomTo(b.displayX, b.displayY, 5);
-	
 
     $GP.info_link.find("ul").html(f.join(""));
     $GP.info_link.find("li").each(function () {
