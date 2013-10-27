@@ -41,9 +41,9 @@ $(document).ready(function() {
         maxRatio: 200
     });
 
-    // Parse a JSON encoded file to fill the graph
-    // (requires "sigma.parseJson.js" to be included)
-    sigInst.parseJson(graphData);
+    // Parse a GEXF encoded file to fill the graph
+    // (requires "sigma.parseGexf.js" to be included)
+    sigInst.parseGexf(graphData);
 
     // Bind events :
     var hideUnconnected = function(event) {
