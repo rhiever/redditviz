@@ -440,9 +440,16 @@ function nodeActive(a) {
 	var groupByDirection=false;
 	if (config.informationPanel.groupByEdgeDirection && config.informationPanel.groupByEdgeDirection==true)	groupByDirection=true;
 	
+	sigInst.position(0, 0, 1).draw();
+	
     sigInst.neighbors = {};
     sigInst.detail = !0;
+	
+    sigInst.position(0, 0, 1).draw();  // Hack to get correct coords
     var b = sigInst._core.graph.nodesIndex[a];
+    // Zoom in on active node location
+    sigInst.goTo(b.displayX, b.displayY, config.sigma.mouseProperties.maxRatio / 2);
+	
     showGroups(!1);
 	var outgoing={},incoming={},mutual={};//SAH
     sigInst.iterEdges(function (b) {
@@ -546,9 +553,6 @@ function nodeActive(a) {
     b.attr.lineWidth = 6;
     b.attr.strokeStyle = "#000000";
     sigInst.draw(2, 2, 2, 2);
-	
-	sigInst.position(0,0,1).draw(2, 2, 2);
-	sigInst.zoomTo(b.displayX, b.displayY, 5);
 
     $GP.info_link.find("ul").html(f.join(""));
     $GP.info_link.find("li").each(function () {
