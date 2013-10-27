@@ -23,7 +23,7 @@
     "hoverBehavior": "dim"
   },
   "informationPanel": {
-    "imageAttribute": true,
+    "imageAttribute": false,
     "groupByEdgeDirection": false
   },
   "sigma": {
