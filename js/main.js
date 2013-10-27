@@ -586,7 +586,7 @@ function nodeActive(a) {
         	//image_index = jQuery.inArray(image_attribute, temp_array);
         	$GP.info_name.html("<div><img src=\"http://metareddit.com/static/logos/" + b.label + ".png\" style=\"vertical-align:middle\" /><br /><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a href=\"http://www.reddit.com/r/' + b.label + '\" target=\"_blank\">' + b.label + "</a></span></div>");
         } else {
-        	$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a href=\"http://www.reddit.com/r/' + b.label + '\" target=\"_blank\">' + b.label + "</a></span></div>");
+			$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a></span></div>');
         }
         // Image field for attribute pane
         $GP.info_data.html(e.join("<br/>"))
