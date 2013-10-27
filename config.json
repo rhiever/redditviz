@@ -3,19 +3,19 @@
   "version": "1.0",
   "data": "data.json",
   "logo": {
-    "text": "",
-    "file": "",
-    "link": ""
+    "text": "reddit network visualized",
+    "file": "images\/reddit.png",
+    "link": "http:\/\/reddit.com\/"
   },
   "text": {
-    "title": "",
-    "more": "",
-    "intro": ""
+    "title": "reddit interest network",
+    "more": "This is an attempt to visualize the entire reddit interest network.",
+    "intro": "This is an attempt to visualize the entire reddit interest network."
   },
   "legend": {
-    "edgeLabel": "",
-    "colorLabel": "",
-    "nodeLabel": ""
+    "edgeLabel": "Related",
+    "colorLabel": "Number of connected subreddits. Red = many, blue = few",
+    "nodeLabel": "Subreddit"
   },
   "features": {
     "search": true,
