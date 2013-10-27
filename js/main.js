@@ -547,9 +547,9 @@ function nodeActive(a) {
     b.attr.strokeStyle = "#000000";
     sigInst.draw(2, 2, 2, 2);
 	
-	sigInst._core.mousecaptor.isMouseDown = true;
+	sigInst.position(0,0,1).draw();
 	sigInst.zoomTo(b.displayX, b.displayY, 5);
-	sigInst._core.mousecaptor.isMouseDown = false;
+	
 
     $GP.info_link.find("ul").html(f.join(""));
     $GP.info_link.find("li").each(function () {
