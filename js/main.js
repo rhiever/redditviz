@@ -104,7 +104,9 @@ function initSigma(config) {
 		);
 	
 		a.bind("upnodes", function (a) {
-		    nodeActive(a.content[0])
+			var subreddit = sigInst.getNodes(event.content[0]).label;
+			window.open("http://www.reddit.com/r/" + subreddit, "_blank");
+		    //nodeActive(a.content[0])
 		});
 
 		a.activateFishEye().draw();
