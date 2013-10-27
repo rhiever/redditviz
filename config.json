@@ -19,8 +19,8 @@
   },
   "features": {
     "search": true,
-    "groupSelectorAttribute": false,
-    "hoverBehavior": "default"
+    "groupSelectorAttribute": "color",
+    "hoverBehavior": "dim"
   },
   "informationPanel": {
     "imageAttribute": false,
