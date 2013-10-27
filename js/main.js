@@ -444,7 +444,7 @@ function nodeActive(a) {
     sigInst.detail = !0;
     var b = sigInst._core.graph.nodesIndex[a];
     showGroups(!1);
-	sigInst.zoomTo(a.displayX, a.displayY, 5);
+	
 	var outgoing={},incoming={},mutual={};//SAH
     sigInst.iterEdges(function (b) {
         b.attr.lineWidth = !1;
