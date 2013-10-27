@@ -443,9 +443,7 @@ function nodeActive(a) {
     sigInst.neighbors = {};
     sigInst.detail = !0;
     var b = sigInst._core.graph.nodesIndex[a];
-	sigInst.zoomTo(b.displayX, b.displayY, 5);
     showGroups(!1);
-	
 	var outgoing={},incoming={},mutual={};//SAH
     sigInst.iterEdges(function (b) {
         b.attr.lineWidth = !1;
@@ -548,6 +546,7 @@ function nodeActive(a) {
     b.attr.lineWidth = 6;
     b.attr.strokeStyle = "#000000";
     sigInst.draw(2, 2, 2, 2);
+	sigInst.zoomTo(b.displayX, b.displayY, 5);
 
     $GP.info_link.find("ul").html(f.join(""));
     $GP.info_link.find("li").each(function () {

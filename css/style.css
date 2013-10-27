@@ -187,10 +187,10 @@ font-size:14px;
 }
 
 #developercontainer {
-        margin-left:25px;
-        margin-bottom:25px;
-        position:fixed;
-        bottom:0;
+    margin-left:25px;
+    margin-bottom:25px;
+    position:fixed;
+    bottom:0;
     color: #fff;
 }
 
@@ -208,6 +208,13 @@ font-size:14px;
 
 .fb-like {
     width: 80px;
+}
+
+.sigma-font {
+    font-family: lobster, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    text-decoration: none;
+    display: inline;
 }
 
 #jisc {
