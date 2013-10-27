@@ -46,7 +46,7 @@
       "defaultLabelBGColor": "#ddd"
     },
     "mouseProperties": {
-      "minRatio": 0.25,
+      "minRatio": 0.75,
       "maxRatio": 20
     }
   }
