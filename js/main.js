@@ -443,6 +443,7 @@ function nodeActive(a) {
     sigInst.neighbors = {};
     sigInst.detail = !0;
     var b = sigInst._core.graph.nodesIndex[a];
+	sigInst.zoomTo(b.displayX, b.displayY, 5);
     showGroups(!1);
 	
 	var outgoing={},incoming={},mutual={};//SAH
