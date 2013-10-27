@@ -104,8 +104,8 @@ function initSigma(config) {
 		);
 	
 		a.bind("upnodes", function (a) {
-			//var subreddit = sigInst.getNodes(event.content[0]).label;
-			window.open("http://www.reddit.com/r/python", "_blank"); //" + subreddit, "_blank");
+			var subreddit = sigInst.getNodes(a.content[0]).label;
+			window.open("http://www.reddit.com/r/" + subreddit, "_blank");
 		    //nodeActive(a.content[0])
 		});
 
