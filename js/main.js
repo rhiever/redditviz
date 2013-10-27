@@ -546,6 +546,8 @@ function nodeActive(a) {
     b.attr.lineWidth = 6;
     b.attr.strokeStyle = "#000000";
     sigInst.draw(2, 2, 2, 2);
+	
+	sigInst._core.mousecaptor.isMouseDown = true;
 	sigInst.zoomTo(b.displayX, b.displayY, 5);
 
     $GP.info_link.find("ul").html(f.join(""));
