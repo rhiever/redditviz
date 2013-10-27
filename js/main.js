@@ -126,7 +126,7 @@ function setupGUI(config) {
 	var logo=""; // Logo elements
 	if (config.logo.file) {
 
-		logo = "<img src=\"" + config.logo.file +"\"";
+		logo = "<img class=\"mainlogo\" src=\"" + config.logo.file +"\"";
 		if (config.logo.text) logo+=" alt=\"" + config.logo.text + "\"";
 		logo+=">";
 	} else if (config.logo.text) {

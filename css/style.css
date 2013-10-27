@@ -252,6 +252,10 @@ margin: 0;
 
 }
 
+.mainlogo {
+    height: 80px;
+}
+
 #title {
 font-weight: bold;
 }
