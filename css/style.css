@@ -280,6 +280,10 @@ margin: 0;
     height: 80px;
 }
 
+#subreddit-logo {
+    height: 40px;
+}
+
 #title {
 font-weight: bold;
 }
