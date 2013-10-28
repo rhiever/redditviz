@@ -677,7 +677,7 @@ function nodeActive(a) {
         }
 
 		try {
-			var SRinfo = jQuery.parseJSON("http://www.reddit.com/r/" + b.label + "/about.json");
+			var SRinfo = jQuery.parseJSON(jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json"));
 		} catch(err) {
 			window.alert(err);
 		}
