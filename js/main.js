@@ -676,7 +676,9 @@ function nodeActive(a) {
             }
         }
 
-        $('#subreddit-logo').attr('src', 'http://metareddit.com/static/logos/' + b.label + '.png');
+		var SRinfo = jQuery.parseJSON("http://www.reddit.com/r/" + b.label + "/about.json");
+		
+        $('#subreddit-logo').attr('src', SRinfo.header_img);//'http://metareddit.com/static/logos/' + b.label + '.png');
         $('#subreddit-logo').attr('alt', b.label);
         $('#subreddit-logo').attr('title', b.label);
 
@@ -684,7 +686,7 @@ function nodeActive(a) {
         	//image_index = jQuery.inArray(image_attribute, temp_array);
         	$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
         } else {
-        	$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a></span></div>');
+        	$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a><br />' + SRinfo.public_description + '</span></div>');
         }
         // Image field for attribute pane
         $GP.info_data.html(e.join("<br/>"));
