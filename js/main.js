@@ -683,12 +683,6 @@ function nodeActive(a) {
 		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
 			function parse(data)
 			{
-				try {
-				alert(data.data.header_img);
-				alert(data.data.public_description);
-				} catch(err) {
-					alert(err);
-				}
 				SRimage = data.data.header_img;
 				SRdesc = data.data.public_description;
 			}
@@ -700,6 +694,8 @@ function nodeActive(a) {
         $('#subreddit-logo').attr('src', SRimage);
         $('#subreddit-logo').attr('alt', b.label);
         $('#subreddit-logo').attr('title', b.label);
+		
+		alert(SRimage + "\n" + SRdesc);
 
         if (image_attribute) {
         	//image_index = jQuery.inArray(image_attribute, temp_array);
@@ -709,6 +705,7 @@ function nodeActive(a) {
         }
         // Image field for attribute pane
         $GP.info_data.html(e.join("<br/>"));
+		alert("test");
     }
     sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[b.id]);  // Highlight the current node
     $GP.info_data.show();
