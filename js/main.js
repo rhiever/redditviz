@@ -689,7 +689,7 @@ function nodeActive(a) {
         )
         .success(function() { ; })
         .error(function() { if (SRimage == null) { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; } })
-        .complete(function() { ; });
+        .complete(function() { if (SRdesc == null) { SRdesc = "";} });
 		
         $('#subreddit-logo').attr('src', SRimage);
         $('#subreddit-logo').attr('alt', b.label);
@@ -705,7 +705,6 @@ function nodeActive(a) {
         }
         // Image field for attribute pane
         $GP.info_data.html(e.join("<br/>"));
-		alert("test");
     }
     sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[b.id]);  // Highlight the current node
     $GP.info_data.show();
