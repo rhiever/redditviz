@@ -680,10 +680,11 @@ function nodeActive(a) {
 		var SRimage = null;
 		var SRdesc = "";
 		
-		jQuery.getJSON(
-        "http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
+		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
         function parse(data)
         {
+			alert(data.data.header_img);
+			alert(data.data.public_description);
 			SRimage = data.data.header_img;
 			SRdesc = data.data.public_description;
         }
