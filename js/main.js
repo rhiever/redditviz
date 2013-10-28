@@ -676,7 +676,11 @@ function nodeActive(a) {
             }
         }
 
-		var SRinfo = jQuery.parseJSON("http://www.reddit.com/r/" + b.label + "/about.json");
+		try {
+			var SRinfo = jQuery.parseJSON("http://www.reddit.com/r/" + b.label + "/about.json");
+		} catch(err) {
+			window.alert(err);
+		}
 		
         $('#subreddit-logo').attr('src', SRinfo.header_img);//'http://metareddit.com/static/logos/' + b.label + '.png');
         $('#subreddit-logo').attr('alt', b.label);
