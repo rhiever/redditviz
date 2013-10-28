@@ -677,11 +677,12 @@ function nodeActive(a) {
         }
 
 		// pull info about the activated subreddit from reddit
+		var SRimage = null;
+		var SRdesc = "";
+		
 		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
 			function parse(data)
 			{
-				var SRimage = null;
-				var SRdesc = "";
 				SRimage = data.data.header_img;
 				SRdesc = data.data.public_description;
 			}
