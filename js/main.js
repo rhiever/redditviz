@@ -707,7 +707,7 @@ function nodeActive(a) {
     }
     sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[b.id]);  // Highlight the current node
     $GP.info_data.show();
-    $GP.info_p.html("Connections:");
+    $GP.info_p.html("Related subreddits:");
     $GP.info.animate({width:'show'},350);
 	$GP.info_donnees.hide();
     sigInst.position(0, 0, 1).draw();
