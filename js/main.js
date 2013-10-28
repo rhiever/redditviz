@@ -686,8 +686,7 @@ function nodeActive(a) {
 				try {
 				alert(data.data.header_img);
 				alert(data.data.public_description);
-				} catch(err)
-				{
+				} catch(err) {
 					alert(err);
 				}
 				SRimage = data.data.header_img;
@@ -695,7 +694,7 @@ function nodeActive(a) {
 			}
         )
         .success(function() { ; })
-        .error(function() { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; })
+        .error(function() { if (SRimage == null) { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; } })
         .complete(function() { ; });
 		
         $('#subreddit-logo').attr('src', SRimage);
