@@ -680,26 +680,31 @@ function nodeActive(a) {
 		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
 			function parse(data)
 			{
-				var SRimage = data.data.header_img;
-				var SRdesc = data.data.public_description;
-				
-				$('#subreddit-logo').attr('src', SRimage);
-				$('#subreddit-logo').attr('alt', b.label);
-				$('#subreddit-logo').attr('title', b.label);
-
-				if (image_attribute) {
-					//image_index = jQuery.inArray(image_attribute, temp_array);
-					$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
-				} else {
-					$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a><br /><br />' + SRdesc + '</span></div>');
-				}
-				// Image field for attribute pane
-				$GP.info_data.html(e.join("<br/>"));
+				var SRimage = null;
+				var SRdesc = "";
+				SRimage = data.data.header_img;
+				SRdesc = data.data.public_description;
 			}
         )
         .success(function() { ; })
-        .error(function() { ; })
-        .complete(function() { ; });
+        .error(function() { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; SRdesc = ""; })
+        .complete(function() {
+			if (SRdesc == null) { SRdesc = ""; }
+			if (SRimage == null) { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; }
+			
+			$('#subreddit-logo').attr('src', SRimage);
+			$('#subreddit-logo').attr('alt', b.label);
+			$('#subreddit-logo').attr('title', b.label);
+
+			if (image_attribute) {
+				//image_index = jQuery.inArray(image_attribute, temp_array);
+				$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
+			} else {
+				$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a><br /><br />' + SRdesc + '</span></div>');
+			}
+			// Image field for attribute pane
+			$GP.info_data.html(e.join("<br/>"));
+			});
     }
     sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[b.id]);  // Highlight the current node
     $GP.info_data.show();
