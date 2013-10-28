@@ -678,12 +678,13 @@ function nodeActive(a) {
 
 		try {
 			var SRinfo = jQuery.parseJSON(jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json"));
+			window.alert(SRinfo.header_img);
+			window.alert(SRinfo.public_description);
 		} catch(err) {
 			window.alert(err);
 		}
 		
-		window.alert(SRinfo.header_img);
-		window.alert(SRinfo.public_description);
+		
 		
         $('#subreddit-logo').attr('src', SRinfo.header_img);//'http://metareddit.com/static/logos/' + b.label + '.png');
         $('#subreddit-logo').attr('alt', b.label);
