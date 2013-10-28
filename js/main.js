@@ -681,17 +681,22 @@ function nodeActive(a) {
 		var SRdesc = "";
 		
 		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
-        function parse(data)
-        {
-			alert(data.data.header_img);
-			alert(data.data.public_description);
-			SRimage = data.data.header_img;
-			SRdesc = data.data.public_description;
-        }
-      )
-      .success(function() { ; })
-      .error(function() { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; })
-      .complete(function() { ; });
+			function parse(data)
+			{
+				try {
+				alert(data.data.header_img);
+				alert(data.data.public_description);
+				} catch(err)
+				{
+					alert(err);
+				}
+				SRimage = data.data.header_img;
+				SRdesc = data.data.public_description;
+			}
+        )
+        .success(function() { ; })
+        .error(function() { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; })
+        .complete(function() { ; });
 		
         $('#subreddit-logo').attr('src', SRimage);
         $('#subreddit-logo').attr('alt', b.label);
