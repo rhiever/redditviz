@@ -14,7 +14,7 @@
   },
   "legend": {
     "edgeLabel": "Related subreddits",
-    "colorLabel": "Number of related subreddits<br/>&nbsp;&nbsp;&nbsp;&nbsp;Red = many, blue = few",
+    "colorLabel": "Cluster of subreddits",
     "nodeLabel": "Subreddit"
   },
   "features": {
