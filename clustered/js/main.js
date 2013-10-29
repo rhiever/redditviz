@@ -48,8 +48,11 @@ function showLoading() {
     var loadingMsg = $('.loading');
     var loadingMsgTxt = $('#loading-msg', loadingMsg);
     if (Math.random() < 0.333) {
-        loadingMsgTxt.html('Reticulating splines');
+        loadingMsgTxt.html('Reticulating splines\n\nIf loading takes too long, try refreshing');
     }
+	else {
+		loadingMsgTxt.html('Loading\n\nIf loading takes too long, try refreshing');
+	}
     loadingMsg.show();
 }
 
