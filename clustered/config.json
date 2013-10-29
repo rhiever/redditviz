@@ -15,7 +15,7 @@
   "legend": {
     "edgeLabel": "Related subreddits",
     "colorLabel": "Cluster of subreddits",
-    "nodeLabel": "Fraction of users posting to the subreddit (log scale)"
+    "nodeLabel": "Subreddit"
   },
   "features": {
     "search": true,
