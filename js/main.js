@@ -148,9 +148,9 @@ function setupGUI(config) {
 	var logo=""; // Logo elements
 	if (config.logo.file) {
 
-		logo = "<center><img class=\"mainlogo\" src=\"" + config.logo.file +"\"";
+		logo = "<img class=\"mainlogo\" src=\"" + config.logo.file +"\"";
 		if (config.logo.text) logo+=" alt=\"" + config.logo.text + "\"";
-		logo+="></center>";
+		logo+=">";
 	} else if (config.logo.text) {
 		logo="<h1>"+config.logo.text+"</h1>";
 	}
