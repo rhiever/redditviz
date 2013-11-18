@@ -4,8 +4,8 @@
   "data": "data.json",
   "logo": {
     "text": "redditviz - reddit interest network",
-    "file": "img\/reddit.png",
-    "link": "http:\/\/reddit.com\/"
+    "file": "img\/RViz.png",
+    "link": "."
   },
   "text": {
     "title": "redditviz - reddit interest network",
@@ -14,7 +14,7 @@
   },
   "legend": {
     "edgeLabel": "Related subreddits",
-    "colorLabel": "Cluster of subreddits",
+    "colorLabel": "Number of related subreddits<br/>&nbsp;&nbsp;&nbsp;&nbsp;Red = many, blue = few",
     "nodeLabel": "Subreddit"
   },
   "features": {
