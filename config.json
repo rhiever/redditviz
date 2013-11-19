@@ -4,8 +4,8 @@
   "data": "data.json",
   "logo": {
     "text": "redditviz - reddit interest network",
-    "file": "img\/reddit.png",
-    "link": "http:\/\/reddit.com\/"
+    "file": "img\/RViz.png",
+    "link": "."
   },
   "text": {
     "title": "redditviz - reddit interest network",
