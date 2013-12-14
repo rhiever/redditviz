@@ -1,3 +1,4 @@
 *.swp
 *~
 *.bak
+evolution-of-reddit/data/*py
