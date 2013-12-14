@@ -30,6 +30,8 @@ jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, text
 	
 	//As soon as page is ready (and data ready) set up it
 	$(document).ready(setupGUI(config));
+	
+	sigInst.startForceAtlas2();
 });//End JSON Config load
 
 
@@ -140,8 +142,6 @@ function initSigma(config) {
     else
 	    a.parseJson(data,dataReady);
     gexf = sigmaInst = null;
-	
-	sigInst.startForceAtlas2();
 }
 
 
