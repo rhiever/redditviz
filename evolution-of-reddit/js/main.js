@@ -140,6 +140,8 @@ function initSigma(config) {
     else
 	    a.parseJson(data,dataReady);
     gexf = sigmaInst = null;
+	
+	a.startForceAtlas2(); //sigInst.startForceAtlas2();
 }
 
 
