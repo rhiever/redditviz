@@ -133,6 +133,7 @@ function initSigma(config) {
 		a.draw();
 		configSigmaElements(config);
         hideLoading();
+        a.startForceAtlas2();
 	}
 
     if (data.indexOf("gexf")>0 || data.indexOf("xml")>0)
