@@ -1,1 +1,1 @@
-{"nodes": [{"color": "rgb(215,25,28)", "redness": "215", "id": 0, "name": "programming", "size": 977.0}, {"color": "rgb(215,25,28)", "redness": "215", "id": 1, "name": "reddit.com", "size": 17299.0}], "links": [{"source": 1, "target": 0, "weight": 1.4842240810394287}]}
+{"nodes": [{"cluster": 0, "name": "programming", "id": 0, "degree": 1, "size": 977.0}, {"cluster": 0, "name": "reddit.com", "id": 1, "degree": 1, "size": 17299.0}], "links": [{"source": 1, "target": 0, "weight": 1.4842240810394287}]}

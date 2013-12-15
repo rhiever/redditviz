@@ -1,1 +1,1 @@
-{"nodes": [{"color": "rgb(215,25,28)", "redness": "215", "id": 0, "name": "reddit.com", "size": 3265.0}, {"color": "rgb(44,123,182)", "redness": "44", "id": 1, "name": "nsfw", "size": 172.0}], "links": [{"source": 1, "target": 0, "weight": 1.0}]}
+{"nodes": [{"cluster": 0, "name": "reddit.com", "id": 0, "degree": 1, "size": 3265.0}, {"cluster": 0, "name": "nsfw", "id": 1, "degree": 1, "size": 172.0}], "links": [{"source": 1, "target": 0, "weight": 1.0}]}

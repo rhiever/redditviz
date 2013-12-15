@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
+<title>Evolution of reddit</title>
 <style type="text/css">
 
 .link {
   stroke: #ccc;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
 }
 
 </style>
@@ -18,30 +24,77 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-var width = 2000;//x - 20,
-    height = 2000;//y - 20;
+var width = x - 20,
+    height = y - 20;
+    padding = 1.5, // separation between same-color circles
+    clusterPadding = 6, // separation between different-color circles
+    maxRadius = 12;
 
 var color = d3.scale.category20();
 
 var force = d3.layout.force()
-    .charge(-50)
+    .charge(-10)
     .linkDistance(function(d) { return (1.0 / d.weight) * 10.0; })
     .linkStrength(function(d) { return d.weight; })
     .gravity(0)
-    .size([width, height]);
+    .size([width/2, height/2]);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height)
-    .style("background-color", "#3A3A3A");
+    .style("background-color", "#3A3A3A")
+    .append("g")
+    .call(d3.behavior.zoom().scaleExtent([0.5, 5]).on("zoom", zoom))
+	.append("g");
+    
+    function zoom() {
+		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+	}
+	
+	svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height", height);
 
-d3.json("data/reddit-network-2011-2.json", function(error, graph) {
+d3.json("data/reddit-network-2010-2.json", function(error, graph) {
   force
       .nodes(graph.nodes)
       .links(graph.links)
       .start();
 
-  var link = svg.selectAll(".link")
+  var nodes = svg.selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", function(d) { return Math.log(d.size); })
+      .style("fill", function(d) { return color(d.cluster); })
+      .style("stroke", function(d) { return color(d.cluster); })
+      .on("mouseover", function(d) { d3.select(".text" + d.name).style("visibility", "visible"); })
+      .on("mouseout",
+      	function(d) {
+      		if (d.degree < 10) d3.select(".text" + d.name).style("visibility", "hidden");
+      	})
+      .call(force.drag);
+      
+    var numClusters = 0;
+    var clusters = [];
+    var biggestNode;
+    
+	graph.nodes.forEach(function(d, i) {
+		if (!(d.cluster in clusters)) {
+			numClusters += 1;
+			clusters.push(d.cluster);
+		}
+	});
+	
+	// The largest node for each cluster
+	var clusters = new Array(numClusters);
+	graph.nodes.forEach(function(d, i) {
+		if (!clusters[i] || (d.size > clusters[i].size)) clusters[d.cluster] = d;
+		if (!biggestNode || (d.size > biggestNode.size)) biggestNode = d;
+	});
+
+  var links = svg.selectAll(".link")
       .data(graph.links)
     .enter().append("path") //("line")
       .attr("class", "link")
@@ -50,19 +103,10 @@ d3.json("data/reddit-network-2011-2.json", function(error, graph) {
       .style("fill", "none")
       .style("stroke-color", "white");
 
-  var node = svg.selectAll(".node")
-      .data(graph.nodes)
-    .enter().append("circle")
-      .attr("class", "node")
-      .attr("r", function(d) { return Math.log(d.size); })
-      .style("fill", function(d) { return d.color; })
-      .style("stroke", function(d) { return d.color; })
-      .call(force.drag);
-      
   var texts = svg.selectAll("text.label")
                 .data(graph.nodes)
                 .enter().append("text")
-                .attr("class", "label")
+                .attr("class", function(d) { return "text" + d.name; })
                 .attr("fill", "white")
                 .style("cursor", "default")
                 .style("-webkit-user-select", "none")
@@ -71,29 +115,50 @@ d3.json("data/reddit-network-2011-2.json", function(error, graph) {
                 .style("-ms-user-select", "none")
                 .style("-khtml-user-select", "none")
                 .style("user-select", "none")
+                .style("visibility", function(d) {
+                	if (d.degree >= 10) { return "visible"; }
+                	else { return "hidden"; }
+                })
                 .text(function(d) { return d.name; });
 
-  force.on("tick", function() {
-	  /*link.attr("x1", function(d) { return d.source.x; })
-			.attr("y1", function(d) { return d.source.y; })
-			.attr("x2", function(d) { return d.target.x; })
-			.attr("y2", function(d) { return d.target.y; });*/
-    link.attr("d", function(d) {
+	// Move d to be adjacent to the cluster node.
+	function cluster(alpha) {
+	  return function(d) {
+		var cluster = clusters[d.cluster];
+		if (cluster.name == d.name) return;
+		var x = d.x - cluster.x,
+			y = d.y - cluster.y,
+			l = Math.sqrt(x * x + y * y),
+			r = Math.log(d.size) + Math.log(cluster.size);
+		if (l != r) {
+		  l = (l - r) / l * alpha;
+		  d.x -= x *= l;
+		  d.y -= y *= l;
+		  cluster.x += x;
+		  cluster.y += y;
+		}
+	  };
+	}
+
+  force.on("tick", tick);
+  
+  function tick(e) {
+  	biggestNode.x = width / 2;
+  	biggestNode.y = height / 2;
+  
+	nodes.each(cluster(10 * e.alpha * e.alpha))
+		.attr("cx", function(d) { return d.x; })
+		.attr("cy", function(d) { return d.y; });
+		  
+    links.attr("d", function(d) {
 		var dx = d.target.x - d.source.x,
 			dy = d.target.y - d.source.y,
 			dr = Math.sqrt(dx * dx + dy * dy);
 		return "M" + d.source.x + "," + d.source.y + "A" + dr + "," + dr + " 0 0,1 " + d.target.x + "," + d.target.y;
 		});
-
-    node.attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; });
         
-    texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
-    	.style("visibility", function(d) {
-                	if (d.redness >= 100) { return "visible"; }
-                	else { return "hidden"; }
-                });
-  });
+    texts.attr("transform", function(d) { return "translate(" + d.x + "," + d.y+100 + ")"; })
+  }
 });
 
 </script>
