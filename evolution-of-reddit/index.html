@@ -92,6 +92,11 @@ var width = x - 20,
     padding = 40, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
     maxRadius = 0;
+    
+// network objects
+var nodes, links, texts;
+
+var textSizeScaled = 14.0;
 
 var force = d3.layout.force()
     .charge(function(d) { return -d.size; })
@@ -107,17 +112,21 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .style("background-color", "#3A3A3A")
     .append("g")
-    .call(d3.behavior.zoom().scaleExtent([0.3, 3]).on("zoom", zoom))
+    .call(d3.behavior.zoom().scaleExtent([0.3, 4]).on("zoom", zoom))
 	.append("g");
     
 function zoom() {
 	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+	var scale = Math.min(2.0, d3.event.scale);
+	textSizeScaled = 14.0 * 1.0 / scale;
+	if (texts != null) texts.style("font-size", textSizeScaled);
+	console.log(d3.event.scale);
 }
 	
 svg.append("rect")
 	.attr("class", "overlay")
-	.attr("width", width)
-	.attr("height", height);
+	.attr("width", 4 * width)
+	.attr("height", 4 * height);
 
 var monthNames = [ "January", "February", "March", "April", "May", "June",
 				"July", "August", "September", "October", "November", "December" ];
@@ -149,8 +158,9 @@ function showReddit() {
 		var numNodes = 0;
 		var clusters = [];
 		var biggestNode;
+		var linked = {};
 	
-		var links = svg.selectAll(".link")
+		links = svg.selectAll(".link")
 		  .data(graph.links)
 		.enter().append("path") //("line")
 		  .attr("class", "link")
@@ -159,20 +169,37 @@ function showReddit() {
 		  .style("fill", "none")
 		  .style("stroke-color", "white");
 	
-		var nodes = svg.selectAll(".node")
+		nodes = svg.selectAll(".node")
 		  .data(graph.nodes)
 		  .enter().append("circle")
 		  .attr("class", "node")
 		  .attr("r", function(d) { return Math.log(d.size); })
 		  .style("fill", function(d) { return color(d.cluster); })
 		  .style("stroke", function(d) { return color(d.cluster); })
-		  .on("mouseover", function(d) { d3.select(".nodelabel" + d.name).style("visibility", "visible"); })
-		  .on("mouseout",
-			function(d) {
-				if (d.size < 0.2 * biggestNode.size && d.name != clusters[d.cluster].name && numNodes > 15) {
+		  .on("mouseover", nodeMouseOver)
+		  .on("mouseout", nodeMouseOut);
+			
+		function nodeMouseOver(d) {
+			d3.select(".nodelabel" + d.name).style("visibility", "visible");
+			
+			nodes.filter(function(o) { return d.cluster != o.cluster;/*!linked[d.id + "," + o.id] && d.id != o.id;*/ }).style("visibility", "hidden");
+			texts.filter(function(o) { return d.cluster != o.cluster;/*!linked[d.id + "," + o.id] && d.id != o.id;*/ }).style("visibility", "hidden");
+			texts.filter(function(o) { return d.cluster == o.cluster;/*linked[d.id + "," + o.id] || d.id == o.id;*/ }).style("visibility", "visible");
+			links.filter(function(o) { return o.target.cluster != d.cluster || o.source.cluster != d.cluster;/*o.target.id != d.id && o.source.id != d.id;*/ }).style("visibility", "hidden");
+		}
+		
+		function nodeMouseOut(d) {
+				nodes.style("visibility", "visible");
+				links.style("visibility", "visible");
+				texts.style("visibility", function(d) {
+					if (d.size >= 0.5 * biggestNode.size || d.name == clusters[d.cluster].name || numNodes <= 20) { return "visible"; }
+						else { return "hidden"; }
+				});
+				
+				if (d.size < 0.2 * biggestNode.size && d.name != clusters[d.cluster].name && numNodes > 20) {
 					d3.select(".nodelabel" + d.name).style("visibility", "hidden");
 				}
-			});
+			}
 			
 		graph.nodes.forEach(function(d, i) {
 			numNodes += 1;
@@ -191,12 +218,18 @@ function showReddit() {
 			if (!clusters[d.cluster] || (d.size > clusters[d.cluster].size)) clusters[d.cluster] = d;
 			if (!biggestNode || (d.size > biggestNode.size)) biggestNode = d;
 		});
-	
-	  var texts = svg.selectAll("text.label")
+		
+		// Compute which nodes are connected
+		graph.links.forEach(function(d, i) {
+			linked[String(d.source + "," + d.target)] = linked[String(d.target + "," + d.source)] = true;
+		});
+		
+	  texts = svg.selectAll("text.label")
 					.data(graph.nodes)
 					.enter().append("text")
 					.attr("class", function(d) { return "nodelabel" + d.name; })
 					.attr("fill", "white")
+					.style("font-size", textSizeScaled)
 					.style("cursor", "default")
 					.style("-webkit-user-select", "none")
 					.style("-webkit-touch-callout", "none")
@@ -205,9 +238,11 @@ function showReddit() {
 					.style("-khtml-user-select", "none")
 					.style("user-select", "none")
 					.style("visibility", function(d) {
-						if (d.size >= 0.5 * biggestNode.size || d.name == clusters[d.cluster].name || numNodes < 15) { return "visible"; }
+						if (d.size >= 0.5 * biggestNode.size || d.name == clusters[d.cluster].name || numNodes <= 20) { return "visible"; }
 						else { return "hidden"; }
 					})
+					.on("mouseover", nodeMouseOver)
+					.on("mouseout", nodeMouseOut)
 					.text(function(d) { return d.name; });
 	
 		// Move d to be adjacent to the cluster node.
