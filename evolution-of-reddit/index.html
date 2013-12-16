@@ -42,8 +42,24 @@
     change: function( event, ui ) {
     	month = 1 + ui.value % 12;
     	year = 2006 + Math.floor(ui.value / 12);
+    	window.location.href = window.location.href.split("#")[0] + "#" + month + "-" + year;
     	showReddit();
-    }})
+    	},
+    create: function(event, ui) {
+		if (window.location.href.indexOf("#") > 0) {
+			var date = window.location.href.split("#")[1].split("-");
+			month = parseInt(date[0]);
+			year = parseInt(date[1]);
+			
+			var sliderValue = (year - 2006) * 12 + (month - 1);
+			console.log(sliderValue);
+			$(this).slider("value", sliderValue);
+			//month = 1 + ui.value % 12;
+			//year = 2006 + Math.floor(ui.value / 12);
+		}
+		else { $(this).slider("value", 0); }
+	}
+    })
     .each(function() {
 
 		  //
@@ -96,7 +112,14 @@ var width = x - 20,
 // network objects
 var nodes, links, texts;
 
+// size of node labels scaled by current zoom
 var textSizeScaled = 14.0;
+
+var monthNames = [ "January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December" ];
+
+var year = 2006;
+var month = 1;
 
 var force = d3.layout.force()
     .charge(function(d) { return -d.size; })
@@ -127,14 +150,6 @@ svg.append("rect")
 	.attr("class", "overlay")
 	.attr("width", 4 * width)
 	.attr("height", 4 * height);
-
-var monthNames = [ "January", "February", "March", "April", "May", "June",
-				"July", "August", "September", "October", "November", "December" ];
-
-var year = 2006;
-var month = 1;
-
-showReddit();
 
 function showReddit() {
 
