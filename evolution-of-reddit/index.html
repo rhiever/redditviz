@@ -18,7 +18,7 @@
 }
 
 #slider {
-	width: 80%;
+	width: 800px;
 	margin-bottom: 15px;
 }
 
@@ -61,6 +61,16 @@ body {
 <script src="http://d3js.org/d3.v3.js"></script>
 
 <body>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <br />
 <div id="reddit-date"></div>
 <center>
@@ -134,8 +144,8 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-var width = 1000; //x - 20,
-    height = 630; //y - 150;
+var width = 800; //x - 20,
+    height = 600; //y - 150;
     padding = 40, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
     maxRadius = 0;
@@ -163,7 +173,7 @@ var color = d3.scale.category20();
 
 function showReddit() {
 
-	document.getElementById("reddit-date").innerHTML = monthNames[month - 1] + " " + String(year);
+	document.getElementById("reddit-date").innerHTML = "reddit in " + monthNames[month - 1] + " " + String(year);
 
 	force.stop();
 	
@@ -422,8 +432,8 @@ function showReddit() {
     </script>
     <script type="IN/Share" data-counter="right"></script>
     <!-- Facebook -->
-    <div class="fb-like" data-href="http://rhiever.github.io/redditviz/evolution-of-reddit/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true" data-font="arial" data-colorscheme="dark"></div>
-    <br />
+    <div class="fb-like" data-href="http://rhiever.github.io/redditviz/evolution-of-reddit/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="false"></div>
+	<br />
     <!-- Twitter -->
     <div class="twitter-tweet"><a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="redditviz">Tweet</a>
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
@@ -441,7 +451,6 @@ function showReddit() {
       })();
     </script>
 </div>
-
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
