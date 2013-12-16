@@ -252,7 +252,7 @@ function showReddit() {
 		
 	function zoomGraph() {
 		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-		var scale = Math.min(0.75, Math.max(1.5, d3.event.scale));
+		var scale = Math.min(1.0, Math.max(1.5, d3.event.scale));
 		textSizeScaled = 30.0 * 1.0 / scale;
 		if (texts != null) texts.style("font-size", textSizeScaled);
 	}
