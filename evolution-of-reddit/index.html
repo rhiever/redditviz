@@ -14,7 +14,7 @@
 
 </style>
 <body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
 var w = window,
@@ -32,7 +32,7 @@ var width = x - 20,
 
 var force = d3.layout.force()
     .charge(function(d) { return -d.size; })
-    //.linkDistance(function(d) { return (1.0 / d.weight) * 100.0; })
+    .linkDistance(function(d) { return (1.0 / d.weight); })
     .linkStrength(function(d) { return d.weight; })
     .gravity(1)
     .size([width/2, height/2]);
@@ -61,10 +61,12 @@ var month = 1;
 
 showReddit();
 
-setInterval(showReddit, 3000);
+setInterval(showReddit, 5000);
 
 function showReddit() {
 
+	force.stop();
+	
 	svg.selectAll(".node")
 	  .data([])
 	  .exit().remove();
@@ -76,9 +78,6 @@ function showReddit() {
 	  .exit().remove();
 
 	d3.json("data/reddit-network-" + String(year) + "-" + String(month) + ".json", function(error, graph) {
-		force.nodes(graph.nodes)
-		   .links(graph.links)
-		   .start();
 	
 		var numClusters = 0;
 		var numNodes = 0;
@@ -194,7 +193,10 @@ function showReddit() {
 			};
 	  }
 		
-		force.on("tick", tick);
+		force.nodes(graph.nodes)
+		   .links(graph.links)
+		   .start()
+		   .on("tick", tick);
 		//for (var i = 150; i > 0; --i) force.tick(d3.event);
 		//force.stop();
 	  
@@ -203,7 +205,7 @@ function showReddit() {
 		//biggestNode.y = height / 2;
 		
 		nodes.each(cluster(10 * e.alpha * e.alpha))
-			.each(collide(.5, e.alpha))
+			//.each(collide(.5, e.alpha))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y; });
 			  
