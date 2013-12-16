@@ -2,3 +2,4 @@
 *~
 *.bak
 evolution-of-reddit/data/*py
+evolution-of-reddit/data/subreddit-raw-edges*py
