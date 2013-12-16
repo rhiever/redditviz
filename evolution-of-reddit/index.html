@@ -13,7 +13,13 @@
 }
 
 #reddit-date {
-	;
+	text-align: center;
+	font-size: 40px;
+}
+
+#slider {
+	width: 80%;
+	margin-bottom: 15px;
 }
 
 </style>
@@ -23,23 +29,54 @@
 <script src="http://d3js.org/d3.v3.js"></script>
 
 <body>
-
+<br />
 <div id="reddit-date"></div>
+<center>
 <div id="slider">
   <script>
     $(function() {
     $("#slider").slider({
     min: 0,
-    max: 83,
+    max: 84,
     value: 0,
     change: function( event, ui ) {
     	month = 1 + ui.value % 12;
     	year = 2006 + Math.floor(ui.value / 12);
     	showReddit();
-    }});
+    }})
+    .each(function() {
+
+		  //
+		  // Add labels to slider whose values 
+		  // are specified by min, max
+		  //
+		
+		  // Get the options for this slider (specified above)
+		  var opt = $(this).data().uiSlider.options;
+		
+		  // Get the number of possible values
+		  var vals = opt.max - opt.min;
+		
+		  // Position the labels
+		  for (var i = 0; i <= vals; i++) {
+		
+			// Create a new element and position it with percentages
+			if (i % 12 == 0) {
+				var el = $("<label>" + String(2006 + Math.floor(i / 12)) + "</label>")
+							.css("position", "absolute")
+							.css("left", (i / vals * 100) - 2 + "%")
+							.css("top", "15px");
+			}
+			
+			// Add the element inside #slider
+			$("#slider").append(el);
+  	}
+	});;
     });
   </script>
 </div>
+</center>
+<br />
 
 <script>
 
@@ -51,8 +88,8 @@ var w = window,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
 var width = x - 20,
-    height = y - 100;
-    padding = 20, // separation between same-color circles
+    height = y - 150;
+    padding = 40, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
     maxRadius = 0;
 
@@ -70,17 +107,20 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .style("background-color", "#3A3A3A")
     .append("g")
-    .call(d3.behavior.zoom().scaleExtent([0.3, 2]).on("zoom", zoom))
+    .call(d3.behavior.zoom().scaleExtent([0.3, 3]).on("zoom", zoom))
 	.append("g");
     
-    function zoom() {
-		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-	}
+function zoom() {
+	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 	
-	svg.append("rect")
-    .attr("class", "overlay")
-    .attr("width", width)
-    .attr("height", height);
+svg.append("rect")
+	.attr("class", "overlay")
+	.attr("width", width)
+	.attr("height", height);
+
+var monthNames = [ "January", "February", "March", "April", "May", "June",
+				"July", "August", "September", "October", "November", "December" ];
 
 var year = 2006;
 var month = 1;
@@ -89,7 +129,7 @@ showReddit();
 
 function showReddit() {
 
-	document.getElementById("reddit-date").innerHTML = String(month) + "/" + String(year);
+	document.getElementById("reddit-date").innerHTML = monthNames[month - 1] + " " + String(year);
 
 	force.stop();
 	
@@ -110,6 +150,15 @@ function showReddit() {
 		var clusters = [];
 		var biggestNode;
 	
+		var links = svg.selectAll(".link")
+		  .data(graph.links)
+		.enter().append("path") //("line")
+		  .attr("class", "link")
+		  .attr("strength", function(d) { return d.weight; })
+		  .style("stroke-width", function(d) { return d.weight; })
+		  .style("fill", "none")
+		  .style("stroke-color", "white");
+	
 		var nodes = svg.selectAll(".node")
 		  .data(graph.nodes)
 		  .enter().append("circle")
@@ -120,7 +169,7 @@ function showReddit() {
 		  .on("mouseover", function(d) { d3.select(".nodelabel" + d.name).style("visibility", "visible"); })
 		  .on("mouseout",
 			function(d) {
-				if (d.size < 0.5 * biggestNode.size && d.name != clusters[d.cluster].name) {
+				if (d.size < 0.2 * biggestNode.size && d.name != clusters[d.cluster].name && numNodes > 15) {
 					d3.select(".nodelabel" + d.name).style("visibility", "hidden");
 				}
 			});
@@ -143,15 +192,6 @@ function showReddit() {
 			if (!biggestNode || (d.size > biggestNode.size)) biggestNode = d;
 		});
 	
-	  var links = svg.selectAll(".link")
-		  .data(graph.links)
-		.enter().append("path") //("line")
-		  .attr("class", "link")
-		  .attr("strength", function(d) { return d.weight; })
-		  .style("stroke-width", function(d) { return d.weight; })
-		  .style("fill", "none")
-		  .style("stroke-color", "white");
-	
 	  var texts = svg.selectAll("text.label")
 					.data(graph.nodes)
 					.enter().append("text")
@@ -165,7 +205,7 @@ function showReddit() {
 					.style("-khtml-user-select", "none")
 					.style("user-select", "none")
 					.style("visibility", function(d) {
-						if (d.size >= 0.5 * biggestNode.size || d.name == clusters[d.cluster].name) { return "visible"; }
+						if (d.size >= 0.5 * biggestNode.size || d.name == clusters[d.cluster].name || numNodes < 15) { return "visible"; }
 						else { return "hidden"; }
 					})
 					.text(function(d) { return d.name; });
@@ -227,8 +267,7 @@ function showReddit() {
 		//force.stop();
 	  
 	  function tick(e) {
-		//biggestNode.x = width / 2;
-		//biggestNode.y = height / 2;
+		//if (e.alpha < 0.05) force.stop();
 		
 		nodes.each(cluster(10 * e.alpha * e.alpha))
 			//.each(collide(.5, e.alpha))
