@@ -22,6 +22,16 @@
 	margin-bottom: 15px;
 }
 
+html {
+    display: table;
+    margin: auto;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+}
+
 </style>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
@@ -52,7 +62,6 @@
 			year = parseInt(date[1]);
 			
 			var sliderValue = (year - 2006) * 12 + (month - 1);
-			console.log(sliderValue);
 			$(this).slider("value", sliderValue);
 			//month = 1 + ui.value % 12;
 			//year = 2006 + Math.floor(ui.value / 12);
@@ -103,8 +112,8 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-var width = x - 20,
-    height = y - 150;
+var width = 1000; //x - 20,
+    height = 630; //y - 150;
     padding = 40, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
     maxRadius = 0;
@@ -130,32 +139,73 @@ var force = d3.layout.force()
 
 var color = d3.scale.category20();
 
-var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .style("background-color", "#3A3A3A")
-    .append("g")
-    .call(d3.behavior.zoom().scaleExtent([0.3, 4]).on("zoom", zoom))
-	.append("g");
-    
-function zoom() {
-	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-	var scale = Math.min(2.0, d3.event.scale);
-	textSizeScaled = 14.0 * 1.0 / scale;
-	if (texts != null) texts.style("font-size", textSizeScaled);
-	console.log(d3.event.scale);
-}
-	
-svg.append("rect")
-	.attr("class", "overlay")
-	.attr("width", 4 * width)
-	.attr("height", 4 * height);
-
 function showReddit() {
 
 	document.getElementById("reddit-date").innerHTML = monthNames[month - 1] + " " + String(year);
 
 	force.stop();
+	
+	if (d3.select("body").select("svg") != null) d3.select("body").select("svg").remove();
+	
+	var initialScale = 1,
+	initialTranslateX = width / 4,
+	initialTranslateY = height / 4;
+	
+	if (year >= 2012) {
+		initialScale = 0.3;
+		initialTranslateX = width / 2.25;
+		initialTranslateY = height / 2.25;
+	}
+	
+	else if (year >= 2011) {
+		initialScale = 0.4;
+		initialTranslateX = width / 2.5;
+		initialTranslateY = height / 2.5;
+	}
+	
+	else if (year >= 2010 && month >= 5) {
+		initialScale = 0.5;
+		initialTranslateX = width / 2.75;
+		initialTranslateY = height / 2.75;
+	}
+		
+	else if (year >= 2009) {
+		initialScale = 0.7;
+		initialTranslateX = width / 3;
+		initialTranslateY = height / 3;
+	}
+	
+	var zoom = d3.behavior.zoom()
+				//.translate([initialTranslateX, initialTranslateY])
+				//.scale(initialScale)
+				.scaleExtent([0.3, 6])
+				.on("zoom", zoomGraph);
+	
+	var svg = d3.select("body").append("svg")
+		.attr("width", width)
+		.attr("height", height)
+		//.attr("transform", "translate(" + 100 + "," + 100 + ")")
+		.style("background-color", "#3A3A3A")
+		.append("g")
+		.call(zoom)
+		.attr("transform", "translate(" + initialTranslateX + "," + initialTranslateY +
+				")scale(" + initialScale + "," + initialScale + ")")
+		.append("g");
+		
+	var scale = Math.min(2.0, zoom.scale());
+	textSizeScaled = 30.0 * 1.0 / scale;
+		
+	function zoomGraph() {
+		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+		var scale = Math.min(2.0, d3.event.scale);
+		textSizeScaled = 30.0 * 1.0 / scale;
+		if (texts != null) texts.style("font-size", textSizeScaled);
+	}
+		
+	svg.append("rect")
+		.attr("class", "overlay")
+		.attr("width", 4 * width)
+		.attr("height", 4 * height);
 	
 	svg.selectAll(".node")
 	  .data([])
