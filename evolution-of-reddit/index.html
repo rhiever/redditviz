@@ -12,9 +12,35 @@
   pointer-events: all;
 }
 
+#reddit-date {
+	;
+}
+
 </style>
-<body>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.0/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
 <script src="http://d3js.org/d3.v3.js"></script>
+
+<body>
+
+<div id="reddit-date"></div>
+<div id="slider">
+  <script>
+    $(function() {
+    $("#slider").slider({
+    min: 0,
+    max: 83,
+    value: 0,
+    slide: function( event, ui ) {
+    	month = 1 + ui.value % 12;
+    	year = 2006 + Math.floor(ui.value / 12);
+    	showReddit();
+    }});
+    });
+  </script>
+</div>
+
 <script>
 
 var w = window,
@@ -25,7 +51,7 @@ var w = window,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
 var width = x - 20,
-    height = y - 20;
+    height = y - 100;
     padding = 20, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
     maxRadius = 0;
@@ -44,7 +70,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .style("background-color", "#3A3A3A")
     .append("g")
-    .call(d3.behavior.zoom().scaleExtent([0.5, 3]).on("zoom", zoom))
+    .call(d3.behavior.zoom().scaleExtent([0.3, 2]).on("zoom", zoom))
 	.append("g");
     
     function zoom() {
@@ -56,14 +82,14 @@ var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-var year = 2008;
+var year = 2006;
 var month = 1;
 
 showReddit();
 
-setInterval(showReddit, 5000);
-
 function showReddit() {
+
+	document.getElementById("reddit-date").innerHTML = String(month) + "/" + String(year);
 
 	force.stop();
 	
