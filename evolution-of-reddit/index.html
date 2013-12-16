@@ -35,6 +35,7 @@
     slide: function( event, ui ) {
     	month = 1 + ui.value % 12;
     	year = 2006 + Math.floor(ui.value / 12);
+    	$("#slider").slider("disable");
     	showReddit();
     }});
     });
@@ -225,6 +226,8 @@ function showReddit() {
 		   .on("tick", tick);
 		//for (var i = 150; i > 0; --i) force.tick(d3.event);
 		//force.stop();
+		
+		$("#slider").slider("enable");
 	  
 	  function tick(e) {
 		//biggestNode.x = width / 2;
