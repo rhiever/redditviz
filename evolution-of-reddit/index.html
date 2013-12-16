@@ -33,12 +33,11 @@ body {
 }
 
 #developercontainer {
-	margin-left:10px;
-	margin-bottom:10px;
+	margin-left:25px;
+	margin-bottom:25px;
 	position:fixed;
 	bottom:0;
 	left:0;
-    color: #fff;
 }
 
 #developercontainer>div {
@@ -51,6 +50,24 @@ body {
 
 .fb-like {
     width: 80px;
+}
+
+#copyright {
+	margin:0 auto;
+	position: fixed;
+	right: 40px;
+	bottom: 25px;
+	z-index:0;
+}
+
+#copyright a {
+color: #000;
+}
+
+#copyright .explanation {
+display: none;
+}
+
 }
 
 </style>
@@ -72,8 +89,9 @@ body {
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <br />
-<div id="reddit-date"></div>
 <center>
+<div id="reddit-date"></div>
+
 <div id="slider">
   <script>
     $(function() {
@@ -132,9 +150,11 @@ body {
     });
   </script>
 </div>
-</center>
 <br />
-
+<div id="viz-info">
+☻ Scroll above to see different time points ☻ Hover on subreddits to see related subreddits ☻ Scroll below to zoom ☻ Drag to explore ☻
+</div>
+<br />
 <script>
 
 var w = window,
@@ -144,7 +164,7 @@ var w = window,
     x = w.innerWidth || e.clientWidth || g.clientWidth,
     y = w.innerHeight|| e.clientHeight|| g.clientHeight;
 
-var width = 800; //x - 20,
+var width = 900; //x - 20,
     height = 600; //y - 150;
     padding = 40, // separation between same-color circles
     clusterPadding = 20, // separation between different-color circles
@@ -424,6 +444,11 @@ function showReddit() {
 	}
 }
 </script>
+<br />
+
+<div id="copyright">
+	<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="img/CC.png" /></a></div>
+</div>
 
 <div id="developercontainer">
     <!-- LinkedIn -->
@@ -450,6 +475,8 @@ function showReddit() {
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
       })();
     </script>
+    <br />
+    Created by <a href="http://www.randalolson.com/">Randal S. Olson</a>
 </div>
 <script type="text/javascript">
 
@@ -464,3 +491,4 @@ function showReddit() {
   })();
 
 </script>
+</center>
