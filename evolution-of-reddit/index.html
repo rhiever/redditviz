@@ -184,7 +184,10 @@ var month = 1;
 
 var force = d3.layout.force()
     .charge(function(d) { return -d.size; })
-    .linkDistance(function(d) { return (1.0 / d.weight); })
+    .linkDistance(function(d) {
+    	if (year < 2008) return (1.0 / d.weight) * 250.0;
+    	else return (1.0 / d.weight);	
+    })
     .linkStrength(function(d) { return d.weight; })
     .gravity(1)
     .size([width/2, height/2]);
@@ -244,7 +247,7 @@ function showReddit() {
 				")scale(" + initialScale + "," + initialScale + ")")
 		.append("g");
 		
-	var scale = Math.min(0.75, Math.max(1.5, zoom.scale()));
+	var scale = Math.min(1.0, Math.max(1.5, zoom.scale()));
 	textSizeScaled = 30.0 * 1.0 / scale;
 		
 	function zoomGraph() {
