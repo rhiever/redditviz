@@ -174,7 +174,7 @@ var width = 900; //x - 20,
 var nodes, links, texts;
 
 // size of node labels scaled by current zoom
-var textSizeScaled = 14.0;
+var textSizeScaled = 30.0;
 
 var monthNames = [ "January", "February", "March", "April", "May", "June",
 				"July", "August", "September", "October", "November", "December" ];
@@ -244,12 +244,12 @@ function showReddit() {
 				")scale(" + initialScale + "," + initialScale + ")")
 		.append("g");
 		
-	var scale = Math.min(2.0, zoom.scale());
+	var scale = Math.min(0.75, Math.max(1.5, zoom.scale()));
 	textSizeScaled = 30.0 * 1.0 / scale;
 		
 	function zoomGraph() {
 		svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-		var scale = Math.min(2.0, d3.event.scale);
+		var scale = Math.min(0.75, Math.max(1.5, d3.event.scale));
 		textSizeScaled = 30.0 * 1.0 / scale;
 		if (texts != null) texts.style("font-size", textSizeScaled);
 	}
