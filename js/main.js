@@ -7,7 +7,7 @@ var config={};
 function GetQueryStringParams(sParam,defaultVal) {
     var sPageURL = ""+window.location;//.search.substring(1);//This might be causing error in Safari?
     if (sPageURL.indexOf("?")==-1) return defaultVal;
-    sPageURL=sPageURL.substr(sPageURL.indexOf("?")+1);    
+    sPageURL=sPageURL.substr(sPageURL.indexOf("?")+1);
     var sURLVariables = sPageURL.split('&');
     for (var i = 0; i < sURLVariables.length; i++) {
         var sParameterName = sURLVariables[i].split('=');
@@ -21,13 +21,13 @@ function GetQueryStringParams(sParam,defaultVal) {
 
 jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, textStatus, jqXHR) {
 	config=data;
-	
+
 	if (config.type!="network") {
 		//bad config
 		alert("Invalid configuration settings.")
 		return;
 	}
-	
+
 	//As soon as page is ready (and data ready) set up it
 	$(document).ready(setupGUI(config));
 });//End JSON Config load
@@ -62,9 +62,9 @@ function hideLoading() {
 
 function initSigma(config) {
 	var data=config.data
-	
+
 	var drawProps, graphProps,mouseProps;
-	if (config.sigma && config.sigma.drawingProperties) 
+	if (config.sigma && config.sigma.drawingProperties)
 		drawProps=config.sigma.drawingProperties;
 	else
 		drawProps={
@@ -79,8 +79,8 @@ function initSigma(config) {
         fontStyle: "bold",
         activeFontStyle: "bold"
     };
-    
-    if (config.sigma && config.sigma.graphProperties)	
+
+    if (config.sigma && config.sigma.graphProperties)
     	graphProps=config.sigma.graphProperties;
     else
     	graphProps={
@@ -89,15 +89,15 @@ function initSigma(config) {
         minEdgeSize: 0.2,
         maxEdgeSize: 0.5
     	};
-	
-	if (config.sigma && config.sigma.mouseProperties) 
+
+	if (config.sigma && config.sigma.mouseProperties)
 		mouseProps=config.sigma.mouseProperties;
 	else
 		mouseProps={
         minRatio: 0.75, // How far can we zoom out?
         maxRatio: 20, // How far can we zoom in?
     	};
-	
+
     var a = sigma.init(document.getElementById("sigma-canvas")).drawingProperties(drawProps).graphProperties(graphProps).mouseProperties(mouseProps);
     sigInst = a;
     a.active = !1;
@@ -111,15 +111,15 @@ function initSigma(config) {
 		a.iterNodes(
 			function (b) { //This is where we populate the array used for the group select box
 
-				// note: index may not be consistent for all nodes. Should calculate each time. 
+				// note: index may not be consistent for all nodes. Should calculate each time.
 				 // alert(JSON.stringify(b.attr.attributes[5].val));
 				// alert(b.x);
 				a.clusters[b.color] || (a.clusters[b.color] = []);
 				a.clusters[b.color].push(b.id);//SAH: push id not label
 			}
-		
+
 		);
-	
+
         a.bind("overnodes", function (a) {
             document.body.style.cursor = "pointer";
         });
@@ -227,7 +227,7 @@ function setupGUI(config) {
 
 function configSigmaElements(config) {
 	$GP=config.GP;
-    
+
     // Hide all edges by default
     sigInst.iterEdges(function(e){
         e.hidden = 1;
@@ -351,7 +351,7 @@ function configSigmaElements(config) {
 				sigInst.position(0,0,1).draw();
 			} else {
 		        var a = sigInst._core;
-	            sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));		
+	            sigInst.zoomTo(a.domElements.nodes.width / 2, a.domElements.nodes.height / 2, a.mousecaptor.ratio * ("in" == b ? 1.5 : 0.5));
 			}
 
         })
@@ -403,7 +403,6 @@ function Search(a) {
     };
     this.input.focus(function () {
         var a = $(this);
-        a.data("focus") || (a.data("focus", !0), a.removeClass("empty"));
         b.clean()
     });
     this.input.keydown(function (a) {
@@ -466,7 +465,7 @@ function Search(a) {
             1 < a.length && this.results.html(a.join(""));
         }
         if(c.length!=1) this.results.show();
-        if(c.length==1) this.results.hide();   
+        if(c.length==1) this.results.hide();
     }
 }
 
@@ -519,10 +518,10 @@ function nodeNormal() {
 function nodeActive(a) {
 
     showLoading();
-    
+
 	var groupByDirection=false;
 	if (config.informationPanel.groupByEdgeDirection && config.informationPanel.groupByEdgeDirection==true)	groupByDirection=true;
-	
+
     sigInst.neighbors = {};
     sigInst.detail = !0;
 
@@ -560,7 +559,7 @@ function nodeActive(a) {
         }
     });
     var f = [];
-    
+
     if (groupByDirection) {
 		//SAH - Compute intersection for mutual and remove these from incoming/outgoing
 		for (e in outgoing) {
@@ -572,7 +571,7 @@ function nodeActive(a) {
 			}
 		}
     }
-    
+
     var createList=function(c) {
         var f = [];
     	var e = [],
@@ -615,17 +614,17 @@ function nodeActive(a) {
 		}
 		return f;
 	}
-	
+
 	/*console.log("mutual:");
 	console.log(mutual);
 	console.log("incoming:");
 	console.log(incoming);
 	console.log("outgoing:");
 	console.log(outgoing);*/
-	
-	
+
+
 	var f=[];
-	
+
 	//console.log("neighbors:");
 	//console.log(sigInst.neighbors);
 
@@ -679,7 +678,7 @@ function nodeActive(a) {
 		// pull info about the activated subreddit from reddit
 		var SRimage = null;
 		var SRdesc = "";
-		
+
 		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
 			function parse(data)
 			{
@@ -692,7 +691,7 @@ function nodeActive(a) {
         .complete(function() {
 			if (SRdesc == null) { SRdesc = ""; }
 			if (SRimage == null) { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; }
-			
+
 			$('#subreddit-logo').attr('src', SRimage);
 			$('#subreddit-logo').attr('alt', b.label);
 			$('#subreddit-logo').attr('title', b.label);
@@ -749,5 +748,3 @@ function showCluster(a) {
     }
     return !1
 }
-
-
