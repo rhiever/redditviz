@@ -29,7 +29,7 @@ jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, text
 	}
 
 	//As soon as page is ready (and data ready) set up it
-	$(document).ready(setupGUI(config));
+	$(document).ready(function () { setupGUI(config); });
 });//End JSON Config load
 
 
