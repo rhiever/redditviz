@@ -3,23 +3,8 @@ var sigInst, canvas, $GP
 //Load configuration file
 var config={};
 
-//For debug allow a config=file.json parameter to specify the config
-function GetQueryStringParams(sParam,defaultVal) {
-    var sPageURL = ""+window.location;//.search.substring(1);//This might be causing error in Safari?
-    if (sPageURL.indexOf("?")==-1) return defaultVal;
-    sPageURL=sPageURL.substr(sPageURL.indexOf("?")+1);
-    var sURLVariables = sPageURL.split('&');
-    for (var i = 0; i < sURLVariables.length; i++) {
-        var sParameterName = sURLVariables[i].split('=');
-        if (sParameterName[0] == sParam) {
-            return sParameterName[1];
-        }
-    }
-    return defaultVal;
-}
-
-
-jQuery.getJSON(GetQueryStringParams("config","config.json"), function(data, textStatus, jqXHR) {
+// Historical pages use only the configuration checked into this directory.
+jQuery.getJSON("config.json", function(data, textStatus, jqXHR) {
 	config=data;
 
 	if (config.type!="network") {
@@ -675,36 +660,18 @@ function nodeActive(a) {
             }
         }
 
-		// pull info about the activated subreddit from reddit
-		var SRimage = null;
+		// Preserve the historical graph without loading third-party scripts or metadata.
 		var SRdesc = "";
-
-		jQuery.getJSON("http://www.reddit.com/r/" + b.label + "/about.json?jsonp=?",
-			function parse(data)
-			{
-				SRimage = data.data.header_img;
-				SRdesc = data.data.public_description;
-			}
-        )
-        .success(function() { ; })
-        .error(function() { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; SRdesc = ""; })
-        .complete(function() {
-			if (SRdesc == null) { SRdesc = ""; }
-			if (SRimage == null) { SRimage = "http://metareddit.com/static/logos/" + b.label + ".png"; }
-
-			$('#subreddit-logo').attr('src', SRimage);
-			$('#subreddit-logo').attr('alt', b.label);
-			$('#subreddit-logo').attr('title', b.label);
+		$('#subreddit-logo').hide();
 
 			if (image_attribute) {
 				//image_index = jQuery.inArray(image_attribute, temp_array);
 				$GP.info_name.html("<div><img src=" + f.attributes[image_attribute] + " style=\"vertical-align:middle\" /> <span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()">' + b.label + "</span></div>");
 			} else {
-				$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="http://reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a><br /><br />' + SRdesc + '</span></div>');
+				$GP.info_name.html("<div><span onmouseover=\"sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex['" + b.id + '\'])" onmouseout="sigInst.refresh()"><a target="_blank" title="Go to /r/' + b.label + '" href="https://www.reddit.com/r/' + b.label + '/">' + b.label + ' <i class="icon-external-link"></i></a><br /><br />' + SRdesc + '</span></div>');
 			}
 			// Image field for attribute pane
 			$GP.info_data.html(e.join("<br/>"));
-			});
     }
     sigInst._core.plotter.drawHoverNode(sigInst._core.graph.nodesIndex[b.id]);  // Highlight the current node
     $GP.info_data.show();

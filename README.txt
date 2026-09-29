@@ -1,3 +1,10 @@
+redditviz is archived and no longer maintained.
+The historical visualization remains available on GitHub Pages.
+Each page loads its bundled configuration and graph data; live subreddit
+metadata and the debug configuration URL parameter have been removed.
+Obsolete social widgets and analytics scripts have also been removed.
+The legacy visualization libraries are retained for compatibility.
+
 Template provided by InteractiveVis project
 http://blogs.oii.ox.ac.uk/vis/
 https://github.com/oxfordinternetinstitute/InteractiveVis/
